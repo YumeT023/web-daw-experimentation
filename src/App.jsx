@@ -5,10 +5,10 @@ import { Arrangement, ArrangementCtxProvider } from "./modules/arrangement";
 function Ctx({ children }) {
   return (
     <ArrangementCtxProvider
-      gridPixel={76}
+      gridPixel={100}
       gridCount={200}
       beatsPerMeasure={
-        4 /* TODO: This should be calculated from the time signature */
+        6 /* TODO: This should be calculated from the time signature */
       }
     >
       {children}
