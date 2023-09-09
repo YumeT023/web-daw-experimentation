@@ -1,0 +1,1 @@
+Notez que le téléchargement du fichier est simulé en créant un lien vers le fichier et en ajoutant l'attribut "download". Pour un vrai téléchargement, vous devrez avoir le fichier hébergé sur un serveur.
