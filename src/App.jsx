@@ -1,6 +1,7 @@
 import "./App.css";
 import { Arrangement, ArrangementCtxProvider } from "./modules/arrangement";
 
+// TODO: some style are inlined (...)
 function Ctx({ children }) {
   return (
     <ArrangementCtxProvider
