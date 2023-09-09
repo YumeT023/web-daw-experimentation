@@ -1,7 +1,15 @@
 import { useArrangementCtx } from "../ArrangementCtx";
 import { useMemo } from "react";
 
-const Cursor = () => {};
+const Cursor = () => {
+  const { tabFullWidth } = useArrangementCtx();
+
+  return (
+    <div className="cursor" style={{ width: tabFullWidth }}>
+      <span className="cursor-block"></span>
+    </div>
+  );
+};
 
 const GradUnit = ({ unit, x }) => (
   <span
@@ -29,7 +37,7 @@ const Graduation = () => {
       ));
   }, [gridPixel, gridCount]);
 
-  return <div style={{ position: "relative", color: "#bcbcbc" }}>{spans}</div>;
+  return <div className="graduation">{spans}</div>;
 };
 
 export const Ruler = () => {

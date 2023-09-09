@@ -37,3 +37,33 @@
 .tracks {
   height: 92%;
 }
+
+.graduation {
+  height: 25px;
+  position: relative;
+  color: #bcbcbc;
+}
+
+.cursor {
+  position: relative;
+  height: 1.8rem;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.cursor-block {
+  transform: translateX(-7px);
+  position: absolute;
+  top: 0;
+  display: inline-block;
+  height: 100vh;
+  width: 15px;
+}
+
+.cursor-block::after {
+  content: "";
+  background-color: #fff;
+  display: inline-block;
+  height: 100%;
+  width: 1px;
+  margin-left: 7px;
+}
