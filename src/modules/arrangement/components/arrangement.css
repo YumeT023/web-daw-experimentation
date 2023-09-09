@@ -46,8 +46,9 @@
 
 .cursor {
   position: relative;
-  height: 1.8rem;
+  height: 2rem;
   background-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.7rem;
 }
 
 .cursor-block {
