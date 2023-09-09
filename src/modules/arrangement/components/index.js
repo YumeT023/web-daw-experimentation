@@ -1,3 +1,4 @@
 export * from "./Arrangement";
-export * from "./Ruler";
+export * from "./Grid";
 export * from "./Tracks";
+export * from "./Ruler";

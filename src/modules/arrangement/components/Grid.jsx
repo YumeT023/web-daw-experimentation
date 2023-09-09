@@ -1,4 +1,4 @@
-import { useArrangementCtx } from "./ArrangementCtx";
+import { useArrangementCtx } from "../ArrangementCtx";
 
 export const Grid = () => {
   const { gridPixel, tabFullWidth } = useArrangementCtx();

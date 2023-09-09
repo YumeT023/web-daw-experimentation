@@ -1,6 +1,5 @@
-import { Arrangement } from "./components";
 import "./App.css";
-import { ArrangementCtxProvider } from "./components/ArrangementCtx";
+import { Arrangement, ArrangementCtxProvider } from "./modules/arrangement";
 
 function Ctx({ children }) {
   return (

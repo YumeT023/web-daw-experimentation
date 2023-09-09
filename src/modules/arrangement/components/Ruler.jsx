@@ -1,4 +1,4 @@
-import { useArrangementCtx } from "./ArrangementCtx";
+import { useArrangementCtx } from "../ArrangementCtx";
 import { useMemo } from "react";
 
 const Cursor = () => {};
