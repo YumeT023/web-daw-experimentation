@@ -1,0 +1,39 @@
+:root {
+  --graduation-fill: rgba(126, 137, 153, 0.5);
+}
+
+.arrangement {
+  height: 100%;
+  background-color: #292929;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: 20rem auto;
+}
+
+.arrangement-options {
+  background: #202020;
+}
+
+.arrangement-track {
+  border-radius: inherit;
+  overflow-y: auto;
+  position: relative;
+}
+
+.arrangement-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ruler {
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
+  height: 5%;
+  z-index: 2;
+  position: relative;
+  background-color: rgba(35, 35, 35, 0.3);
+}
+
+.tracks {
+  height: 92%;
+}
