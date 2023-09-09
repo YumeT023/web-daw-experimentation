@@ -1,9 +1,8 @@
 import { useArrangementCtx } from "../ArrangementCtx";
 
 export const Grid = () => {
-  const { gridPixel, tabFullWidth } = useArrangementCtx();
-
-  const bx = gridPixel / 4;
+  const { gridPixel, tabFullWidth, beatsPerMeasure } = useArrangementCtx();
+  const basis = gridPixel / beatsPerMeasure;
 
   return (
     <div
@@ -30,27 +29,15 @@ export const Grid = () => {
               height="100vh"
               width={0.5}
             />
-            <rect
-              x={bx}
-              y={30}
-              fill="var(--graduation-fill)"
-              height="100vh"
-              width={0.5}
-            />
-            <rect
-              x={bx * 2}
-              y={30}
-              fill="var(--graduation-fill)"
-              height="100vh"
-              width={0.5}
-            />
-            <rect
-              x={bx * 3}
-              y={30}
-              fill="var(--graduation-fill)"
-              height="100vh"
-              width={0.5}
-            />
+            {Array.from({ length: beatsPerMeasure }, (_, i) => (
+              <rect
+                x={basis * (i + 1)}
+                y={30}
+                fill="var(--graduation-fill)"
+                height="100vh"
+                width={0.5}
+              />
+            ))}
           </pattern>
         </defs>
 
