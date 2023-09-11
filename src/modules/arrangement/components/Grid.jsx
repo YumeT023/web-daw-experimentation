@@ -31,6 +31,7 @@ export const Grid = () => {
             />
             {Array.from({ length: beatsPerMeasure }, (_, i) => (
               <rect
+                key={basis * (i + 1)}
                 x={basis * (i + 1)}
                 y={30}
                 fill="var(--graduation-fill)"
