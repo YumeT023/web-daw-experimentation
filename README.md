@@ -36,3 +36,7 @@ _TODO_: This should be calculated from the `time signatures`
 ##### value 6
 
 ![bp measure 1](<snapshot/configurable-beats-per-measure%20(6).PNG>)
+
+#### Waveform and ruler and cursor
+
+![wavesurfer_ruler_cursor](snapshot/waveform-with-cursor.PNG)
