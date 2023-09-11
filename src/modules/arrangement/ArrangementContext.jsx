@@ -7,7 +7,7 @@ const Ctx = createContext({
   beatsPerMeasure: 0,
 });
 
-export const ArrangementCtxProvider = ({
+export const ArrangementContextProvider = ({
   children,
   gridPixel,
   gridCount,
@@ -30,4 +30,4 @@ export const ArrangementCtxProvider = ({
   );
 };
 
-export const useArrangementCtx = () => useContext(Ctx);
+export const useArrangementContext = () => useContext(Ctx);

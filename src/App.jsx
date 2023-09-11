@@ -1,10 +1,10 @@
 import "./App.css";
-import { Arrangement, ArrangementCtxProvider } from "./modules/arrangement";
+import { Arrangement, ArrangementContextProvider } from "./modules/arrangement";
 
 // TODO: some style are inlined (...)
-function Ctx({ children }) {
+function Context({ children }) {
   return (
-    <ArrangementCtxProvider
+    <ArrangementContextProvider
       gridPixel={100}
       gridCount={200}
       beatsPerMeasure={
@@ -12,17 +12,17 @@ function Ctx({ children }) {
       }
     >
       {children}
-    </ArrangementCtxProvider>
+    </ArrangementContextProvider>
   );
 }
 
 function App() {
   return (
-    <Ctx>
+    <Context>
       <div className="app">
         <Arrangement />
       </div>
-    </Ctx>
+    </Context>
   );
 }
 

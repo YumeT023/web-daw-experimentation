@@ -1,8 +1,8 @@
 import { useMemo, useRef } from "react";
-import { useArrangementCtx } from "../ArrangementCtx";
+import { useArrangementContext } from "../ArrangementContext";
 
 const Cursor = () => {
-  const { tabFullWidth } = useArrangementCtx();
+  const { tabFullWidth } = useArrangementContext();
   const cursorRef = useRef(null);
 
   const seekPos = (e) => {
@@ -23,7 +23,7 @@ const Cursor = () => {
   );
 };
 
-const GradUnit = ({ unit, x }) => (
+const GraduationUnit = ({ unit, x }) => (
   <span
     style={{
       left: `${x}px`,
@@ -37,15 +37,19 @@ const GradUnit = ({ unit, x }) => (
 );
 
 const Graduation = () => {
-  const { gridPixel, gridCount } = useArrangementCtx();
+  const { gridPixel, gridCount } = useArrangementContext();
 
   const spans = useMemo(() => {
     return Array(gridCount)
       .fill(undefined)
       .map((_, index) => (
-        <GradUnit key={index * gridPixel} unit={index} x={index * gridPixel}>
+        <GraduationUnit
+          key={index * gridPixel}
+          unit={index}
+          x={index * gridPixel}
+        >
           {index}
-        </GradUnit>
+        </GraduationUnit>
       ));
   }, [gridPixel, gridCount]);
 
@@ -53,7 +57,7 @@ const Graduation = () => {
 };
 
 export const Ruler = () => {
-  const { tabFullWidth } = useArrangementCtx();
+  const { tabFullWidth } = useArrangementContext();
 
   return (
     <div className="ruler" style={{ width: tabFullWidth }}>

@@ -1,7 +1,7 @@
-import { useArrangementCtx } from "../ArrangementCtx";
+import { useArrangementContext } from "../ArrangementContext";
 
 export const Grid = () => {
-  const { gridPixel, tabFullWidth, beatsPerMeasure } = useArrangementCtx();
+  const { gridPixel, tabFullWidth, beatsPerMeasure } = useArrangementContext();
   const basis = gridPixel / beatsPerMeasure;
 
   return (
