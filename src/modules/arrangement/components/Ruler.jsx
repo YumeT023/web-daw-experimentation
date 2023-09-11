@@ -1,12 +1,24 @@
+import { useMemo, useRef } from "react";
 import { useArrangementCtx } from "../ArrangementCtx";
-import { useMemo } from "react";
 
 const Cursor = () => {
   const { tabFullWidth } = useArrangementCtx();
+  const cursorRef = useRef(null);
+
+  const seekPos = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    cursorRef.current.style.left = `${x}px`;
+  };
 
   return (
-    <div className="cursor" style={{ width: tabFullWidth }}>
-      <span className="cursor-block"></span>
+    <div
+      className="cursor"
+      style={{ width: tabFullWidth }}
+      role="button"
+      onClick={seekPos}
+    >
+      <span className="cursor-block" ref={cursorRef}></span>
     </div>
   );
 };
