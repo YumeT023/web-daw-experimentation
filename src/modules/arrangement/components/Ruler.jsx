@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react";
 import { useArrangementContext } from "../ArrangementContext";
 
 const Cursor = () => {
-  const { tabFullWidth, setCursorPixel } = useArrangementContext();
+  const { rulerWidth, setCursorPixel } = useArrangementContext();
   const cursorRef = useRef(null);
 
   const seekPos = (e) => {
@@ -15,7 +15,7 @@ const Cursor = () => {
   return (
     <div
       className="cursor"
-      style={{ width: tabFullWidth }}
+      style={{ width: rulerWidth }}
       role="button"
       onClick={seekPos}
     >
@@ -58,10 +58,10 @@ const Graduation = () => {
 };
 
 export const Ruler = () => {
-  const { tabFullWidth } = useArrangementContext();
+  const { rulerWidth } = useArrangementContext();
 
   return (
-    <div className="ruler" style={{ width: tabFullWidth }}>
+    <div className="ruler" style={{ width: rulerWidth }}>
       <Graduation />
       <Cursor />
     </div>

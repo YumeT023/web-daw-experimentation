@@ -3,7 +3,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 const Ctx = createContext({
   gridPixel: 0,
   gridCount: 0,
-  tabFullWidth: 0,
+  rulerWidth: 0,
   beatsPerMeasure: 0,
   cursorPixel: 0,
   setCursorPixel: (pixel) => {},
@@ -26,7 +26,7 @@ export const ArrangementContextProvider = ({
           beatsPerMeasure,
           cursorPixel,
           setCursorPixel: (pixel) => setCursorPixel(pixel),
-          tabFullWidth: gridCount * gridPixel,
+          rulerWidth: gridCount * gridPixel,
         }),
         [gridPixel, gridCount, beatsPerMeasure, cursorPixel, setCursorPixel]
       )}

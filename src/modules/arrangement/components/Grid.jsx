@@ -1,7 +1,7 @@
 import { useArrangementContext } from "../ArrangementContext";
 
 export const Grid = () => {
-  const { gridPixel, tabFullWidth, beatsPerMeasure } = useArrangementContext();
+  const { gridPixel, rulerWidth, beatsPerMeasure } = useArrangementContext();
   const basis = gridPixel / beatsPerMeasure;
 
   return (
@@ -10,7 +10,7 @@ export const Grid = () => {
       style={{
         position: "absolute",
         top: 0,
-        width: tabFullWidth,
+        width: rulerWidth,
         height: "100%",
       }}
     >
@@ -42,7 +42,7 @@ export const Grid = () => {
           </pattern>
         </defs>
 
-        <rect height="100%" width={tabFullWidth} fill="url(#grid-pattern)" />
+        <rect height="100%" width={rulerWidth} fill="url(#grid-pattern)" />
       </svg>
     </div>
   );
