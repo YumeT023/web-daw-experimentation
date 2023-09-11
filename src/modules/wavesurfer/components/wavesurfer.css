@@ -1,0 +1,14 @@
+#Track_01_Wavesurfer_Container {
+  background-color: rgba(138, 28, 124, 0.75);
+}
+
+#Track_02_Wavesurfer_Container {
+  background-color: rgba(37, 19, 81, 0.75);
+}
+
+[id$="Wavesurfer_Container"] {
+  width: fit-content;
+  border-radius: 4px;
+  /*padding-block: 0.5rem;*/
+  margin-bottom: 1rem;
+}

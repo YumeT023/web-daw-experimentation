@@ -5,7 +5,8 @@ export const Tracks = () => {
   const { rulerWidth } = useArrangementContext();
   return (
     <div className="tracks" style={{ width: rulerWidth }}>
-      <WaveSurfer id="Remote_Track_01" />
+      <WaveSurfer id="Track_01_Wavesurfer_Container" />
+      <WaveSurfer id="Track_02_Wavesurfer_Container" />
     </div>
   );
 };

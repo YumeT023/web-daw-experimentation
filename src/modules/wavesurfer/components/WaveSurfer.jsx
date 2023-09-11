@@ -1,6 +1,7 @@
 import WaveSurferJs from "wavesurfer.js";
 import { useEffect, useRef, useState } from "react";
 import { useArrangementContext } from "../../arrangement";
+import "./wavesurfer.css";
 
 export const WaveSurfer = ({ id }) => {
   const ref = useRef(null);
@@ -24,9 +25,10 @@ export const WaveSurfer = ({ id }) => {
     const ws = WaveSurferJs.create({
       container: "#" + id,
       waveColor: "#fff",
+      progressColor: "#fff",
       minPxPerSec: 100,
       fillParent: false,
-      scrollParent: false,
+      height: 80,
     });
 
     ws.on("ready", () => {});
@@ -53,7 +55,7 @@ export const WaveSurfer = ({ id }) => {
   };
 
   return (
-    <div id={id} style={{ position: "relative", zIndex: 2, width: "100%" }}>
+    <div id={id} style={{ position: "relative", zIndex: 2 }}>
       {!hasImported ? (
         <input
           type="file"
