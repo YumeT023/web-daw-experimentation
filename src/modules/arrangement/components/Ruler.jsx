@@ -2,12 +2,13 @@ import { useMemo, useRef } from "react";
 import { useArrangementContext } from "../ArrangementContext";
 
 const Cursor = () => {
-  const { tabFullWidth } = useArrangementContext();
+  const { tabFullWidth, setCursorPixel } = useArrangementContext();
   const cursorRef = useRef(null);
 
   const seekPos = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
+    setCursorPixel(x);
     cursorRef.current.style.left = `${x}px`;
   };
 

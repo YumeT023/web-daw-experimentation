@@ -6,7 +6,7 @@ function Context({ children }) {
   return (
     <ArrangementContextProvider
       gridPixel={100}
-      gridCount={200}
+      gridCount={300}
       beatsPerMeasure={
         6 /* TODO: This should be calculated from the time signature */
       }

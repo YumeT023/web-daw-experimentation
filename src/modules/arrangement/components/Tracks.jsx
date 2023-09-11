@@ -1,3 +1,11 @@
+import { WaveSurfer } from "../../wavesurfer/components";
+import { useArrangementContext } from "../ArrangementContext";
+
 export const Tracks = () => {
-  return <div className="tracks"></div>;
+  const { tabFullWidth } = useArrangementContext();
+  return (
+    <div className="tracks" style={{ width: tabFullWidth }}>
+      <WaveSurfer id="Remote_Track_01" />
+    </div>
+  );
 };

@@ -1,10 +1,12 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const Ctx = createContext({
   gridPixel: 0,
   gridCount: 0,
   tabFullWidth: 0,
   beatsPerMeasure: 0,
+  cursorPixel: 0,
+  setCursorPixel: (pixel) => {},
 });
 
 export const ArrangementContextProvider = ({
@@ -13,6 +15,8 @@ export const ArrangementContextProvider = ({
   gridCount,
   beatsPerMeasure,
 }) => {
+  const [cursorPixel, setCursorPixel] = useState(0);
+
   return (
     <Ctx.Provider
       value={useMemo(
@@ -20,9 +24,11 @@ export const ArrangementContextProvider = ({
           gridPixel,
           gridCount,
           beatsPerMeasure,
+          cursorPixel,
+          setCursorPixel: (pixel) => setCursorPixel(pixel),
           tabFullWidth: gridCount * gridPixel,
         }),
-        [gridPixel, gridCount, beatsPerMeasure]
+        [gridPixel, gridCount, beatsPerMeasure, cursorPixel, setCursorPixel]
       )}
     >
       {children}
