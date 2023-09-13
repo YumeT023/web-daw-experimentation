@@ -1,9 +1,14 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useArrangementContext } from "../ArrangementContext";
 
 const Cursor = () => {
-  const { rulerWidth, setCursorPixel } = useArrangementContext();
+  const { rulerWidth, setCursorPixel, cursorPixel } = useArrangementContext();
   const cursorRef = useRef(null);
+
+  useEffect(() => {
+    console.log("px", cursorPixel);
+    cursorRef.current.style.left = `${cursorPixel}px`;
+  }, [cursorRef, cursorPixel]);
 
   const seekPos = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();

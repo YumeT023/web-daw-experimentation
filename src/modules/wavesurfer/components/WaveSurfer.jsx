@@ -15,7 +15,7 @@ export const WaveSurfer = ({ id }) => {
       if (cursorPixel > 0) {
         const duration = ws.getDuration();
         const pxPerSec = 100;
-        progress = cursorPixel / (pxPerSec * duration);
+        progress = cursorPixel / (pxPerSec * duration + 0.7);
       }
       ws.seekTo(progress);
     }

@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
+import { cursor_step, cursor_tick_millis } from "../audiolib/options";
 
 const Ctx = createContext({
   gridPixel: 0,
@@ -6,7 +7,10 @@ const Ctx = createContext({
   rulerWidth: 0,
   beatsPerMeasure: 0,
   cursorPixel: 0,
-  setCursorPixel: (pixel) => {},
+  isPlaying: false,
+  stop: () => {},
+  playPause: () => {},
+  setCursorPixel: (px) => {},
 });
 
 export const ArrangementContextProvider = ({
@@ -15,7 +19,15 @@ export const ArrangementContextProvider = ({
   gridCount,
   beatsPerMeasure,
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
   const [cursorPixel, setCursorPixel] = useState(0);
+  const tickRef = useRef(null);
+
+  const tickInterval = () => {
+    tickRef.current = setInterval(() => {
+      setCursorPixel((prev) => prev + cursor_step);
+    }, cursor_tick_millis);
+  };
 
   return (
     <Ctx.Provider
@@ -25,10 +37,33 @@ export const ArrangementContextProvider = ({
           gridCount,
           beatsPerMeasure,
           cursorPixel,
-          setCursorPixel: (pixel) => setCursorPixel(pixel),
           rulerWidth: gridCount * gridPixel,
+          isPlaying,
+          stop: () => {
+            setIsPlaying(false);
+            setCursorPixel(0);
+            tickRef.current && clearInterval(tickRef.current);
+          },
+          playPause: () =>
+            setIsPlaying((is) => {
+              const _v = !is;
+              tickRef.current && clearInterval(tickRef.current);
+              if (_v) {
+                tickInterval();
+              }
+              return _v;
+            }),
+          setCursorPixel: (pixel) => setCursorPixel(pixel),
         }),
-        [gridPixel, gridCount, beatsPerMeasure, cursorPixel, setCursorPixel]
+        [
+          gridPixel,
+          gridCount,
+          beatsPerMeasure,
+          cursorPixel,
+          isPlaying,
+          setCursorPixel,
+          setIsPlaying,
+        ]
       )}
     >
       {children}

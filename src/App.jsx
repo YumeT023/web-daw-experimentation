@@ -1,12 +1,13 @@
 import "./App.css";
 import { Arrangement, ArrangementContextProvider } from "./modules/arrangement";
+import { grid_count, grid_pixel } from "./modules/audiolib/options";
 
 // TODO: some style are inlined (...)
 function Context({ children }) {
   return (
     <ArrangementContextProvider
-      gridPixel={100}
-      gridCount={300}
+      gridPixel={grid_pixel}
+      gridCount={grid_count}
       beatsPerMeasure={
         6 /* TODO: This should be calculated from the time signature */
       }
