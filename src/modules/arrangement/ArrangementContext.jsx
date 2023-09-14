@@ -1,5 +1,5 @@
-import { createContext, useContext, useMemo, useRef, useState } from "react";
-import { cursor_step, cursor_tick_millis } from "../audiolib/options";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useMixerPlayState } from "./hooks/useMixerPlayState";
 
 const Ctx = createContext({
   gridPixel: 0,
@@ -7,10 +7,14 @@ const Ctx = createContext({
   rulerWidth: 0,
   beatsPerMeasure: 0,
   cursorPixel: 0,
-  isPlaying: false,
-  stop: () => {},
-  playPause: () => {},
   setCursorPixel: (px) => {},
+  mixerPlayState: "stop",
+  mixerPlayStateAction: {
+    pause: () => {},
+    play: () => {},
+    stop: () => {},
+    playPause: () => {},
+  },
 });
 
 export const ArrangementContextProvider = ({
@@ -19,15 +23,12 @@ export const ArrangementContextProvider = ({
   gridCount,
   beatsPerMeasure,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [cursorPixel, setCursorPixel] = useState(0);
-  const tickRef = useRef(null);
+  const [mixerPlayState, mixerPlayStateAction] = useMixerPlayState();
 
-  const tickInterval = () => {
-    tickRef.current = setInterval(() => {
-      setCursorPixel((prev) => prev + cursor_step);
-    }, cursor_tick_millis);
-  };
+  useEffect(() => {
+    console.log(mixerPlayState);
+  }, [mixerPlayState]);
 
   return (
     <Ctx.Provider
@@ -38,31 +39,18 @@ export const ArrangementContextProvider = ({
           beatsPerMeasure,
           cursorPixel,
           rulerWidth: gridCount * gridPixel,
-          isPlaying,
-          stop: () => {
-            setIsPlaying(false);
-            setCursorPixel(0);
-            tickRef.current && clearInterval(tickRef.current);
-          },
-          playPause: () =>
-            setIsPlaying((is) => {
-              const _v = !is;
-              tickRef.current && clearInterval(tickRef.current);
-              if (_v) {
-                tickInterval();
-              }
-              return _v;
-            }),
           setCursorPixel: (pixel) => setCursorPixel(pixel),
+          mixerPlayState,
+          mixerPlayStateAction,
         }),
         [
           gridPixel,
           gridCount,
           beatsPerMeasure,
           cursorPixel,
-          isPlaying,
           setCursorPixel,
-          setIsPlaying,
+          mixerPlayState,
+          mixerPlayStateAction,
         ]
       )}
     >

@@ -1,13 +1,52 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useArrangementContext } from "../ArrangementContext";
+import { cursor_step, cursor_tick_millis } from "../../audiolib/options";
 
 const Cursor = () => {
-  const { rulerWidth, setCursorPixel, cursorPixel } = useArrangementContext();
+  const { rulerWidth, setCursorPixel, cursorPixel, mixerPlayState } =
+    useArrangementContext();
   const cursorRef = useRef(null);
+  const cursorPixelTemp = useRef(cursorPixel);
+  const tickRef = useRef(null);
 
   useEffect(() => {
-    console.log("px", cursorPixel);
+    const cursor = cursorRef.current;
+    let tick;
+
+    const syncInternalCursorState = () => {
+      console.log("state", mixerPlayState);
+      switch (mixerPlayState) {
+        case "play":
+          tick = setInterval(() => {
+            cursorPixelTemp.current += cursor_step;
+            cursor.style.left = `${cursorPixelTemp.current}px`;
+          }, cursor_tick_millis);
+
+          tickRef.current = tick;
+          break;
+        case "pause":
+          clearInterval(tickRef.current);
+          break;
+        case "stop":
+          cursor.style.left = 0;
+          cursorPixelTemp.current = 0;
+          clearInterval(tickRef.current);
+          break;
+        default:
+          throw new Error("unexpected mixer play state: " + mixerPlayState);
+      }
+    };
+
+    cursor && syncInternalCursorState();
+
+    return () => {
+      tick && clearInterval(tick);
+    };
+  }, [cursorRef, cursorPixel, tickRef, mixerPlayState]);
+
+  useEffect(() => {
     cursorRef.current.style.left = `${cursorPixel}px`;
+    cursorPixelTemp.current = cursorPixel;
   }, [cursorRef, cursorPixel]);
 
   const seekPos = (e) => {
