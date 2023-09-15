@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useArrangementContext } from "../../arrangement";
 import { grid_pixel } from "../../audiolib/options";
 
@@ -27,7 +27,13 @@ export const LoadableAudio = ({ id }) => {
 
   useEffect(() => {
     const audio = ref.current;
-    audio && (audio.currentTime = cursorPixel / grid_pixel);
+    if (audio) {
+      const time = cursorPixel / grid_pixel;
+      if (time <= audio.duration) {
+        audio.ended && audio.play();
+      }
+      audio.currentTime = time;
+    }
   }, [ref, cursorPixel]);
 
   useEffect(() => {
