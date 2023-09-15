@@ -38,7 +38,7 @@ export const LoadableAudio = ({ id }) => {
 
   useEffect(() => {
     const audio = ref.current;
-    audio && syncInternalAudioState(audio, mixerPlayState);
+    audio.src && syncInternalAudioState(audio, mixerPlayState);
   }, [ref, mixerPlayState]);
 
   const loadBlobIntoWavesurfer = (blob) => {
@@ -55,8 +55,20 @@ export const LoadableAudio = ({ id }) => {
     }
   };
 
+  const duration = ref.current.duration || 0;
+
   return (
-    <div id={id} style={{ position: "relative", zIndex: 2 }}>
+    <div
+      id={id}
+      style={{
+        position: "relative",
+        backgroundColor: "blue",
+        marginBottom: 10,
+        height: "5rem",
+        zIndex: 2,
+        width: duration * grid_pixel,
+      }}
+    >
       {!hasImported ? (
         <input
           type="file"

@@ -5,9 +5,11 @@ export const Tracks = () => {
   const { rulerWidth } = useArrangementContext();
   return (
     <div className="tracks" style={{ width: rulerWidth }}>
-      <LoadableAudio id="Wavesurfer_Container" />
-      {/*<WaveSurfer id="Track_01_Wavesurfer_Container" />*/}
-      {/*<WaveSurfer id="Track_02_Wavesurfer_Container" />*/}
+      <LoadableAudio id="Wavesurfer_Container_T0" />
+      <LoadableAudio id="Wavesurfer_Container_T1" />
+      <LoadableAudio id="Wavesurfer_Container_T2" />
+      <LoadableAudio id="Wavesurfer_Container_T3" />
+      <LoadableAudio id="Wavesurfer_Container_T4" />
     </div>
   );
 };
