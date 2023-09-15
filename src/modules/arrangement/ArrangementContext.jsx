@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { useMixerPlayState } from "./hooks/useMixerPlayState";
 
 const Ctx = createContext({
@@ -25,10 +25,6 @@ export const ArrangementContextProvider = ({
 }) => {
   const [cursorPixel, setCursorPixel] = useState(0);
   const [mixerPlayState, mixerPlayStateAction] = useMixerPlayState();
-
-  useEffect(() => {
-    console.log(mixerPlayState);
-  }, [mixerPlayState]);
 
   return (
     <Ctx.Provider

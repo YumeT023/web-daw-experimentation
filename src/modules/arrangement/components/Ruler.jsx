@@ -14,7 +14,6 @@ const Cursor = () => {
     let tick;
 
     const syncInternalCursorState = () => {
-      console.log("state", mixerPlayState);
       switch (mixerPlayState) {
         case "play":
           tick = setInterval(() => {
