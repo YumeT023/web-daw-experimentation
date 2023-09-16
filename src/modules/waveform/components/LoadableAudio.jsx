@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useArrangementContext } from "../../arrangement";
 import { grid_pixel } from "../../audiolib/options";
 
