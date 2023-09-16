@@ -1,15 +1,26 @@
 import { useArrangementContext } from "../ArrangementContext";
 import { LoadableAudio } from "../../waveform/components";
+import { useState } from "react";
 
 export const Tracks = () => {
   const { rulerWidth } = useArrangementContext();
+  // for testing purpose
+  const [tracks, setTracks] = useState([]);
+
   return (
     <div className="tracks" style={{ width: rulerWidth }}>
-      <LoadableAudio id="Wavesurfer_Container_T0" />
-      <LoadableAudio id="Wavesurfer_Container_T1" startAtPixel={640} />
-      <LoadableAudio id="Wavesurfer_Container_T2" />
-      <LoadableAudio id="Wavesurfer_Container_T3" />
-      <LoadableAudio id="Wavesurfer_Container_T4" />
+      {tracks.map((_, index) => (
+        <LoadableAudio
+          key={/* TODO */ index}
+          id={"Wavesurfer_Container_T" + index}
+        />
+      ))}
+      <button
+        onClick={() => setTracks((_) => [..._, null])}
+        style={{ /* TODO */ position: "relative", zIndex: 2 }}
+      >
+        add track
+      </button>
     </div>
   );
 };
