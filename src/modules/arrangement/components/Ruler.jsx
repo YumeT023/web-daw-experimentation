@@ -24,6 +24,7 @@ const Cursor = () => {
           tickRef.current = tick;
           break;
         case "pause":
+          setCursorPixel(cursorPixelTemp.current);
           clearInterval(tickRef.current);
           break;
         case "stop":
