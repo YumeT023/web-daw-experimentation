@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useArrangementContext } from "../ArrangementContext";
 import { cursor_step, cursor_tick_millis } from "../../audiolib/options";
+import { toTime } from "../../audiolib/utils";
 
 const Cursor = () => {
   const { rulerWidth, setCursorPixel, cursorPixel, mixerPlayState } =
@@ -30,6 +31,7 @@ const Cursor = () => {
         case "stop":
           cursor.style.left = 0;
           cursorPixelTemp.current = 0;
+          setCursorPixel(0);
           clearInterval(tickRef.current);
           break;
         default:
@@ -42,7 +44,7 @@ const Cursor = () => {
     return () => {
       tick && clearInterval(tick);
     };
-  }, [cursorRef, cursorPixel, tickRef, mixerPlayState]);
+  }, [cursorRef, cursorPixel, tickRef, mixerPlayState, setCursorPixel]);
 
   useEffect(() => {
     cursorRef.current.style.left = `${cursorPixel}px`;
@@ -53,6 +55,8 @@ const Cursor = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     setCursorPixel(x);
+    console.log("px", x);
+    console.log("time", toTime(x));
     cursorRef.current.style.left = `${x}px`;
   };
 

@@ -21,6 +21,7 @@ const syncInternalAudioState = ({ audio, startTime }, state) => {
   }
 };
 
+// TODO: this method uses HTML5AudioElement and lot of timeout (which needs a manual cleanup) ... webAudio API does it better
 export const LoadableAudio = forwardRef(
   ({ startAtPixel = 0, id }, containerRef) => {
     const [hasImported, setHasImported] = useState(false);
@@ -115,5 +116,3 @@ export const LoadableAudio = forwardRef(
     );
   }
 );
-//
-// export const LoadableAudio = ({ id, startAtPixel = 0 }) => {};

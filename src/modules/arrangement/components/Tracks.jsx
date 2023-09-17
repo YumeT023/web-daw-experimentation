@@ -1,7 +1,7 @@
 import { useArrangementContext } from "../ArrangementContext";
 import { useRef, useState } from "react";
 import { WithDrag } from "../../common/drag";
-import { LoadableAudio } from "../../waveform/components";
+import { ScheduleAudio } from "../../waveform/components/ScheduleAudio";
 
 const offsetX = 335.9895935058594;
 
@@ -24,11 +24,11 @@ export const Tracks = ({ scroll }) => {
             const bPos = pos.x - offsetX;
             const left = bPos > 0 ? bPos : 0;
             return (
-              <LoadableAudio
+              <ScheduleAudio
                 ref={ref}
                 startAtPixel={left}
                 key={/* TODO */ index}
-                id={"Wavesurfer_Container_T" + index}
+                id="WF_container0"
               />
             );
           }}
