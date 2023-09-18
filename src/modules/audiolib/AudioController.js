@@ -1,13 +1,22 @@
 export class AudioController {
-  /** @type {AudioContext} */
+  /**
+   * Its own AudioContext to avoid interfering from other's operations
+   * @type AudioContext
+   */
   _ctx;
-  /** @type {AudioBufferSourceNode} */
+  /**
+   * @type AudioBufferSourceNode
+   */
   _source;
-  /** @type {AudioBuffer} */
+  /**
+   * Hold the buffer to be able to reuse it when renewing the sourceNode
+   * @type AudioBuffer
+   */
   _buffer;
+  // record time 'in seconds' at which the playback is paused
   pausedAt = 0;
+  // hold the timestamp at which a playback start
   startTime = 0;
-  isPlaying = false;
 
   constructor() {
     this._ctx = new AudioContext();
@@ -34,35 +43,40 @@ export class AudioController {
     this._source = this._ctx.createBufferSource();
     if (this._buffer) this._source.buffer = this._buffer;
     this._source.connect(this._ctx.destination);
-    this.isPlaying = false;
   }
 
-  schedulePlayAt(when, time) {
+  #renewSourceNode() {
+    this._source && this._source.disconnect();
     this.#newSourceNode();
-    this._source.start(this._ctx.currentTime + when, time ?? this.pausedAt);
-    this.isPlaying = true;
   }
 
-  play(time) {
-    // TODO
-    if (time) this.startTime = time;
-    else this.startTime = this._ctx.currentTime - (this.pausedAt || 0);
-    this._source.disconnect();
-    this.schedulePlayAt(0, time ?? this.pausedAt);
+  schedulePbAt(when, time) {
+    this.#renewSourceNode();
+    this.pausedAt = time;
+    this.startTime = this._ctx.currentTime - time;
+    this._source.start(this._ctx.currentTime + when, time);
   }
 
-  stop() {
-    this.startTime = 0;
-    this.pausedAt = 0;
-    this.isPlaying && this.hasBuffer && this._source.stop();
-    this.isPlaying = false;
-    this.#newSourceNode();
+  play(time = 0) {
+    // 'schedulePbAt' will renew the sourceNode
+    this.schedulePbAt(0, time);
+  }
+
+  resume() {
+    this.play(this.pausedAt);
   }
 
   pause() {
-    this.pausedAt = this._ctx.currentTime - this.startTime;
-    this.isPlaying = false;
-    this._source.stop();
+    if (this.hasBuffer) {
+      this._source.stop();
+      this.pausedAt = this._ctx.currentTime - this.startTime;
+    }
+  }
+
+  stop() {
+    this.pausedAt = 0;
+    this.startTime = 0;
+    this.#renewSourceNode();
   }
 
   get duration() {

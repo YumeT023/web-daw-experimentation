@@ -20,10 +20,10 @@ export const ScheduleAudio = forwardRef(
       const doSyncAudio = () => {
         switch (mixerPlayState) {
           case "stop":
-            audio.isPlaying && audio.stop();
+            audio.stop();
             break;
           case "pause":
-            audio.isPlaying && audio.pause();
+            audio.pause();
             break;
           default:
             const isCursorBeforeTrack = cursorTime < audio.duration + startTime;
@@ -31,8 +31,7 @@ export const ScheduleAudio = forwardRef(
               const currentTime =
                 cursorTime > startTime ? cursorTime - startTime : 0;
               if (currentTime === 0) {
-                audio.isPlaying && audio.stop();
-                audio.schedulePlayAt(startTime - cursorTime, 0);
+                audio.schedulePbAt(startTime - cursorTime, 0);
                 return;
               }
               audio.play(currentTime);
