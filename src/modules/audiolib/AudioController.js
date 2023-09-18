@@ -22,6 +22,12 @@ export class AudioController {
     this._ctx = new AudioContext();
   }
 
+  async ready() {
+    if (this._ctx.state === "suspended") {
+      await this._ctx.resume();
+    }
+  }
+
   /**
    * load audio buffer into the 'AudioBufferSourceNode'
    * @param {AudioBuffer} buffer

@@ -38,7 +38,7 @@ export const ScheduleAudio = forwardRef(
         }
       };
 
-      doSyncAudio();
+      audio.ready().then(doSyncAudio);
     }, [startTime, cursorTime, mixerPlayState]);
 
     const loadBlobIntoWavesurfer = async (blob) => {
