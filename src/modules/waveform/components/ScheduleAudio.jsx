@@ -26,15 +26,13 @@ export const ScheduleAudio = forwardRef(
             audio.pause();
             break;
           default:
-            const isCursorBeforeTrack = cursorTime < audio.duration + startTime;
+            const isCursorBeforeTrack = startTime > cursorTime;
             if (isCursorBeforeTrack) {
-              const currentTime =
-                cursorTime > startTime ? cursorTime - startTime : 0;
-              if (currentTime === 0) {
-                audio.schedulePbAt(startTime - cursorTime, 0);
-                return;
-              }
-              audio.play(currentTime);
+              const playbackDelay = startTime - cursorTime;
+              audio.schedulePbAt(playbackDelay, 0);
+            } else {
+              const timeToPlayback = cursorTime - startTime;
+              audio.play(timeToPlayback);
             }
         }
       };
