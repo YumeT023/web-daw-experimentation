@@ -1,32 +1,27 @@
 import { useArrangementContext } from "../ArrangementContext";
-import { useRef, useState } from "react";
-import { WithDrag } from "../../common/drag";
+import { useState } from "react";
 import { ScheduleAudio } from "../../waveform/components/ScheduleAudio";
+import { WithContainerDrag } from "../../common/drag";
 
-const offsetX = 335.9895935058594;
-
-export const Tracks = ({ scroll }) => {
+export const Tracks = () => {
   const { rulerWidth } = useArrangementContext();
-  // for testing purpose
   const [tracks, setTracks] = useState([]);
-  const containerRef = useRef(null);
 
   return (
-    <div
-      ref={containerRef}
-      className="tracks"
-      style={{ width: rulerWidth, position: "relative" }}
-    >
+    <div className="tracks" style={{ width: rulerWidth, position: "relative" }}>
       {tracks.map((_, index) => (
-        <WithDrag
-          scroll={scroll}
-          render={({ ref, pos }) => {
-            const bPos = pos.x - offsetX;
-            const left = bPos > 0 ? bPos : 0;
+        <WithContainerDrag
+          style={{
+            position: "relative",
+            zIndex: 2,
+            width: "fit-content",
+            borderRadius: "4px",
+          }}
+          render={({ x }) => {
             return (
               <ScheduleAudio
-                ref={ref}
-                startAtPixel={left}
+                // ref={ref}
+                startAtPixel={x}
                 key={/* TODO */ index}
                 id="WF_container0"
               />

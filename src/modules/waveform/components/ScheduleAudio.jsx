@@ -57,15 +57,17 @@ export const ScheduleAudio = forwardRef(
 
     const duration = audioRef.current.duration;
 
+    console.log("startAtPixel", startAtPixel);
+
     return (
       <div
         id={id}
         ref={containerRef}
         style={{
-          left: startAtPixel,
+          // left: startAtPixel,
+          borderRadius: "4px",
           position: "relative",
           backgroundColor: "blue",
-          marginBottom: 10,
           height: "5rem",
           zIndex: 2,
           width: duration * grid_pixel,
