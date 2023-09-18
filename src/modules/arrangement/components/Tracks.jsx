@@ -1,6 +1,6 @@
 import { useArrangementContext } from "../ArrangementContext";
 import { useState } from "react";
-import { ScheduleAudio } from "../../waveform/components/ScheduleAudio";
+import { ScheduleAudio } from "../../waveform/components";
 import { WithContainerDrag } from "../../common/drag";
 
 export const Tracks = () => {

@@ -3,6 +3,7 @@ import { useArrangementContext } from "../../arrangement";
 import { grid_pixel } from "../../audiolib/options";
 import { toTime } from "../../audiolib/utils";
 import { AudioController } from "../../audiolib/AudioController";
+import { genRandomColor } from "../../../utils/color";
 
 export const ScheduleAudio = forwardRef(
   ({ startAtPixel = 0, id }, containerRef) => {
@@ -56,8 +57,7 @@ export const ScheduleAudio = forwardRef(
     };
 
     const duration = audioRef.current.duration;
-
-    console.log("startAtPixel", startAtPixel);
+    const backgroundColor = useMemo(() => genRandomColor(), []);
 
     return (
       <div
@@ -67,10 +67,10 @@ export const ScheduleAudio = forwardRef(
           // left: startAtPixel,
           borderRadius: "4px",
           position: "relative",
-          backgroundColor: "blue",
           height: "5rem",
           zIndex: 2,
           width: duration * grid_pixel,
+          backgroundColor,
         }}
       >
         {!hasImported ? (
