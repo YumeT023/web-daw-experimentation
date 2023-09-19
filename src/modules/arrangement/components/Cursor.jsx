@@ -2,7 +2,7 @@ import { useArrangementContext } from "../ArrangementContext";
 import { useEffect, useRef } from "react";
 import { cursor_step, cursor_tick_millis } from "../../audiolib/options";
 
-export const Cursor = () => {
+export const Cursor = ({ container }) => {
   const { rulerWidth, setCursorPixel, mixerPlayState } =
     useArrangementContext();
   const ref = useRef(null);
@@ -18,6 +18,7 @@ export const Cursor = () => {
           intervalId = setInterval(() => {
             atPixel.current += cursor_step;
             cursor.style.left = `${atPixel.current}px`;
+            container.scrollLeft = `${atPixel.current - 100}`;
           }, cursor_tick_millis);
           break;
         case "pause":
@@ -27,6 +28,7 @@ export const Cursor = () => {
         default:
           atPixel.current = 0;
           cursor.style.left = "0";
+          container && (container.scrollLeft = 0);
           setCursorPixel(0);
           clearInterval(intervalId);
           break;

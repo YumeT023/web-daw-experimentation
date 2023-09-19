@@ -14,6 +14,7 @@ export const Tracks = () => {
           style={{
             position: "relative",
             zIndex: 2,
+            marginTop: "10px",
             width: "fit-content",
             borderRadius: "4px",
           }}

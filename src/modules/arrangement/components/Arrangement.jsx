@@ -21,7 +21,7 @@ export const Arrangement = () => {
         <button onClick={mixerPlayStateAction.stop}>stop</button>
       </div>
       <div className="arrangement-track" ref={ref}>
-        <Ruler />
+        <Ruler container={ref.current} />
         <Tracks />
         <Grid />
       </div>
