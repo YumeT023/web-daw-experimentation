@@ -34,7 +34,6 @@ export const Tracks = () => {
         style={{
           /* TODO */ position: "relative",
           zIndex: 2,
-          marginTop: 100 * tracks.length,
         }}
       >
         add track

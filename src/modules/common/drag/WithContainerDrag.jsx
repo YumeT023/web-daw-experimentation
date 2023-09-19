@@ -13,8 +13,7 @@ export const WithContainerDrag = ({ children, render, ...boxProps }) => {
   };
 
   const onStop = (_, o) => {
-    console.log("o->x", o.x);
-    setX(() => o.x);
+    setX(o.x);
     ref.current.style.borderColor = "transparent";
     ref.current.style.cursor = "default";
   };
