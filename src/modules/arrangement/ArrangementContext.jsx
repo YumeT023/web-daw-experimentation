@@ -1,5 +1,6 @@
-import {createContext, useCallback, useContext, useMemo, useState} from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { useMixerPlayState } from "./hooks/useMixerPlayState";
+import { min_grid_count } from "../audiolib/options";
 
 const Ctx = createContext({
   gridPixel: 0,
@@ -7,6 +8,7 @@ const Ctx = createContext({
   rulerWidth: 0,
   beatsPerMeasure: 0,
   cursorPixel: 0,
+  updateGridCount: (timeSeconds) => {},
   setCursorPixel: (px) => {},
   mixerPlayState: "stop",
   mixerPlayStateAction: {
@@ -20,11 +22,12 @@ const Ctx = createContext({
 export const ArrangementContextProvider = ({
   children,
   gridPixel,
-  gridCount,
   beatsPerMeasure,
 }) => {
   const [cursorPixel, setCursorPixel] = useState(0);
   const [mixerPlayState, mixerPlayStateAction] = useMixerPlayState();
+  const [gridCount, setGridCount] = useState(min_grid_count);
+  const isGridCountUpdated = useRef(false);
 
   return (
     <Ctx.Provider
@@ -32,6 +35,11 @@ export const ArrangementContextProvider = ({
         () => ({
           gridPixel,
           gridCount,
+          updateGridCount: (timeSeconds) => {
+            const newGridCount = Math.round(timeSeconds) + 1;
+            setGridCount((prev) => Math.max(prev, newGridCount));
+            isGridCountUpdated.current = true;
+          },
           beatsPerMeasure,
           cursorPixel,
           rulerWidth: gridCount * gridPixel,
@@ -45,6 +53,7 @@ export const ArrangementContextProvider = ({
           beatsPerMeasure,
           cursorPixel,
           setCursorPixel,
+          setGridCount,
           mixerPlayState,
           mixerPlayStateAction,
         ]

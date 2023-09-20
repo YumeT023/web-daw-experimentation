@@ -8,7 +8,8 @@ import { genRandomColor } from "../../../utils/color";
 export const ScheduleAudio = forwardRef(
   ({ startAtPixel = 0, id }, containerRef) => {
     const [hasImported, setHasImported] = useState(false);
-    const { cursorPixel, mixerPlayState } = useArrangementContext();
+    const { cursorPixel, mixerPlayState, updateGridCount } =
+      useArrangementContext();
     const audioRef = useRef(new AudioController());
 
     const startTime = useMemo(() => toTime(startAtPixel), [startAtPixel]);
@@ -42,8 +43,10 @@ export const ScheduleAudio = forwardRef(
     }, [startTime, cursorTime, mixerPlayState]);
 
     const loadBlobIntoWavesurfer = async (blob) => {
+      const audio = audioRef.current;
       const buffer = await blob.arrayBuffer();
-      await audioRef.current.loadArrayBuffer(buffer);
+      await audio.loadArrayBuffer(buffer);
+      updateGridCount(audio.duration ?? 0);
     };
 
     const importAudio = (e) => {
