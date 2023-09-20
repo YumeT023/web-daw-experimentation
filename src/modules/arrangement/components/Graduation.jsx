@@ -17,6 +17,8 @@ const GraduationUnit = ({ unit, x }) => (
 export const Graduation = () => {
   const { gridPixel, gridCount } = useArrangementContext();
 
+  console.log("gc", gridCount);
+
   const spans = useMemo(() => {
     return Array(gridCount)
       .fill(undefined)

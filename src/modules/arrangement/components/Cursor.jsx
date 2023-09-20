@@ -17,6 +17,10 @@ export const Cursor = ({ container }) => {
         case "play":
           intervalId = setInterval(() => {
             atPixel.current += cursor_step;
+            const pixelInt = Math.round(atPixel.current);
+            if (rulerWidth === pixelInt) {
+              clearInterval(intervalId);
+            }
             cursor.style.left = `${atPixel.current}px`;
             container.scrollLeft = `${atPixel.current - 100}`;
           }, cursor_tick_millis);
