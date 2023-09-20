@@ -1,9 +1,10 @@
 import { useArrangementContext } from "../ArrangementContext";
 import { useEffect, useRef } from "react";
 import { cursor_step, cursor_tick_millis } from "../../audiolib/options";
+import { almostEq } from "../../../utils/almost_eq";
 
 export const Cursor = ({ container }) => {
-  const { rulerWidth, setCursorPixel, mixerPlayState } =
+  const { rulerWidth, setCursorPixel, mixerPlayState, mixerPlayStateAction } =
     useArrangementContext();
   const ref = useRef(null);
   const atPixel = useRef(0);
@@ -17,9 +18,10 @@ export const Cursor = ({ container }) => {
         case "play":
           intervalId = setInterval(() => {
             atPixel.current += cursor_step;
-            const pixelInt = Math.round(atPixel.current);
-            if (rulerWidth === pixelInt) {
+            if (almostEq(rulerWidth, atPixel.current, 4)) {
+              mixerPlayStateAction.pause();
               clearInterval(intervalId);
+              return;
             }
             cursor.style.left = `${atPixel.current}px`;
             container.scrollLeft = `${atPixel.current - 100}`;
