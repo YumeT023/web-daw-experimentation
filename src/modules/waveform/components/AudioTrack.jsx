@@ -2,51 +2,25 @@ import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { useArrangementContext } from "../../arrangement";
 import { grid_pixel } from "../../audiolib/options";
 import { toTime } from "../../audiolib/utils";
-import { AudioController } from "../../audiolib/AudioController";
 import { genRandomColor } from "../../../utils/color";
+import { Track } from "../../audiolib/Track";
 
-export const ScheduleAudio = forwardRef(
+export const AudioTrack = forwardRef(
   ({ startAtPixel = 0, id }, containerRef) => {
     const [hasImported, setHasImported] = useState(false);
-    const { cursorPixel, mixerPlayState, updateGridCount } =
-      useArrangementContext();
-    const audioRef = useRef(new AudioController());
+    const { updateGridCount, mixer } = useArrangementContext();
 
-    const startTime = useMemo(() => toTime(startAtPixel), [startAtPixel]);
-    const cursorTime = useMemo(() => toTime(cursorPixel), [cursorPixel]);
+    const track = useRef(new Track({ title: "t0" }));
 
     useEffect(() => {
-      const audio = audioRef.current;
-
-      // TODO
-      const doSyncAudio = () => {
-        switch (mixerPlayState) {
-          case "stop":
-            audio.stop();
-            break;
-          case "pause":
-            audio.pause();
-            break;
-          default:
-            const isCursorBeforeTrack = startTime > cursorTime;
-            if (isCursorBeforeTrack) {
-              const playbackDelay = startTime - cursorTime;
-              audio.schedulePbAt(playbackDelay, 0);
-            } else {
-              const timeToPlayback = cursorTime - startTime;
-              audio.play(timeToPlayback);
-            }
-        }
-      };
-
-      audio.ready().then(doSyncAudio);
-    }, [startTime, cursorTime, mixerPlayState]);
+      track.current.startsAt = toTime(startAtPixel);
+    }, [startAtPixel]);
 
     const loadBlobIntoWavesurfer = async (blob) => {
-      const audio = audioRef.current;
       const buffer = await blob.arrayBuffer();
-      await audio.loadArrayBuffer(buffer);
-      updateGridCount(audio.duration ?? 0);
+      await track.current.initAudio(buffer);
+      mixer.addTrack(track.current);
+      updateGridCount(track.current.audio.duration ?? 0);
     };
 
     const importAudio = (e) => {
@@ -59,7 +33,7 @@ export const ScheduleAudio = forwardRef(
       }
     };
 
-    const duration = audioRef.current.duration;
+    const duration = track.current.audio?.duration ?? 0;
     const backgroundColor = useMemo(() => genRandomColor(), []);
 
     return (
@@ -67,7 +41,6 @@ export const ScheduleAudio = forwardRef(
         id={id}
         ref={containerRef}
         style={{
-          // left: startAtPixel,
           borderRadius: "4px",
           position: "relative",
           height: "5rem",

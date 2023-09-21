@@ -1,6 +1,6 @@
 import { useArrangementContext } from "../ArrangementContext";
 import { useState } from "react";
-import { ScheduleAudio } from "../../waveform/components";
+import { AudioTrack } from "../../waveform/components";
 import { WithContainerDrag } from "../../common/drag";
 
 export const Tracks = () => {
@@ -11,6 +11,7 @@ export const Tracks = () => {
     <div className="tracks" style={{ width: rulerWidth, position: "relative" }}>
       {tracks.map((_, index) => (
         <WithContainerDrag
+          key={index}
           style={{
             position: "relative",
             zIndex: 2,
@@ -20,7 +21,7 @@ export const Tracks = () => {
           }}
           render={({ x }) => {
             return (
-              <ScheduleAudio
+              <AudioTrack
                 // ref={ref}
                 startAtPixel={x}
                 key={/* TODO */ index}

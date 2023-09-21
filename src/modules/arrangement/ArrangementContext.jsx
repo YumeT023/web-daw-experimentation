@@ -1,6 +1,15 @@
-import { createContext, useContext, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useMixerPlayState } from "./hooks/useMixerPlayState";
 import { min_grid_count } from "../audiolib/options";
+import { Mixer } from "../audiolib/Mixer";
+import { toTime } from "../audiolib/utils";
 
 const Ctx = createContext({
   gridPixel: 0,
@@ -10,6 +19,7 @@ const Ctx = createContext({
   cursorPixel: 0,
   updateGridCount: (timeSeconds) => {},
   setCursorPixel: (px) => {},
+  mixer: new Mixer(),
   mixerPlayState: "stop",
   mixerPlayStateAction: {
     pause: () => {},
@@ -29,12 +39,32 @@ export const ArrangementContextProvider = ({
   const [gridCount, setGridCount] = useState(min_grid_count);
   const isGridCountUpdated = useRef(false);
 
+  const mixer = useRef(new Mixer([]));
+
+  useEffect(() => {
+    const doUpdateMixer = () => {
+      switch (mixerPlayState) {
+        case "play":
+          mixer.current.play();
+          break;
+        case "pause":
+          mixer.current.pause();
+          break;
+        default:
+          mixer.current.stop();
+          break;
+      }
+    };
+    doUpdateMixer();
+  }, [mixer, mixerPlayState]);
+
   return (
     <Ctx.Provider
       value={useMemo(
         () => ({
           gridPixel,
           gridCount,
+          mixer: mixer.current,
           updateGridCount: (timeSeconds) => {
             const newGridCount = Math.round(timeSeconds) + 1;
             setGridCount((prev) => Math.max(prev, newGridCount));
@@ -43,7 +73,10 @@ export const ArrangementContextProvider = ({
           beatsPerMeasure,
           cursorPixel,
           rulerWidth: gridCount * gridPixel,
-          setCursorPixel: (pixel) => setCursorPixel(pixel),
+          setCursorPixel: (pixel) => {
+            mixer.current.currentTime = toTime(pixel);
+            setCursorPixel(pixel);
+          },
           mixerPlayState,
           mixerPlayStateAction,
         }),
@@ -56,6 +89,7 @@ export const ArrangementContextProvider = ({
           setGridCount,
           mixerPlayState,
           mixerPlayStateAction,
+          mixer,
         ]
       )}
     >
